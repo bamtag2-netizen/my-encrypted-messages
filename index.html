@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="رسائلي المشفرة: حوّل رسائلك العربية إلى رموز لا يقرؤها إلا من يعرف كلمة السر">
+<title>رسائلي المشفرة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Sans+Symbols+2&family=Noto+Sans+Runic&family=Noto+Sans+Ogham&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="ar">
+  <header>
+    <h1>رسائلي المشفرة</h1>
+    <p class="sub">اكتب بالعربية لتحصل على الرموز، أو الصق الرموز لتعود إلى العربية. أضف كلمة سر ليبقى ترتيب الرموز بينك وبين من تراسله.</p>
+  </header>
+
+  <nav class="chips" id="chips" aria-label="اللغات المشفرة"></nav>
+
+  <section class="card keycard" aria-label="المفتاح السري">
+    <div class="head"><h2>المفتاح السري</h2><span class="pill" id="keyState">غير مفعّل</span></div>
+    <div class="pwrow">
+      <input type="password" id="pw" autocomplete="off" spellcheck="false" placeholder="كلمة سر يعرفها أنت ومن تراسله فقط" aria-label="كلمة السر">
+      <button class="ghost" id="pwShow" type="button">إظهار</button>
+    </div>
+    <label class="check" for="variable"><input type="checkbox" id="variable"> <span><b>تشفير متغير</b>: يتغير شكل الحرف حسب موقعه في الرسالة، فيصعب كسره.</span></label>
+    <p class="note fp" id="fp" hidden>بصمة المفتاح: <span class="glyph" id="fpGlyphs"></span>. قارنها مع من تراسله؛ إن تطابقت فقد كتبتما نفس كلمة السر.</p>
+    <p class="note" id="keyNote"></p>
+  </section>
+
+  <section class="card" aria-label="الترجمة">
+    <div class="dir">
+      <div class="side" id="fromName">العربية</div>
+      <button class="swap" id="swap" aria-label="عكس اتجاه الترجمة" title="عكس الاتجاه">⇄</button>
+      <div class="side" id="toName"></div>
+    </div>
+    <div>
+      <label class="lbl" for="input" id="inLbl">النص العربي</label>
+      <textarea id="input" spellcheck="false"></textarea>
+    </div>
+    <div>
+      <label class="lbl" id="outLbl">الناتج</label>
+      <div class="out" id="output" aria-live="polite"></div>
+    </div>
+    <p class="note" id="status"></p>
+    <div class="row">
+      <button class="primary" id="copy">نسخ الناتج</button>
+      <button id="useOut">نقل الناتج إلى الإدخال</button>
+      <button class="ghost" id="clear">مسح</button>
+    </div>
+  </section>
+
+  <section class="card" id="keypadCard" hidden aria-label="لوحة الرموز">
+    <div class="head"><h2>لوحة الرموز</h2><span class="meta">اضغط الرمز لإضافته إلى الإدخال</span></div>
+    <div class="keys" id="keys"></div>
+  </section>
+
+  <section class="card" aria-label="جدول المفاتيح">
+    <div class="head">
+      <h2 id="tblTitle">جدول المفاتيح</h2>
+      <div class="row" id="langActions"></div>
+    </div>
+    <p class="note" id="langDesc"></p>
+    <div class="table" id="table"></div>
+  </section>
+
+  <section class="card" id="editor" hidden aria-label="محرر اللغة">
+    <div class="head"><h2 id="edTitle">لغة جديدة</h2></div>
+    <div class="grid2">
+      <div><label class="lbl" for="edName">اسم اللغة</label><input type="text" id="edName" placeholder="مثلاً: رموز القبيلة"></div>
+      <div><label class="lbl" for="edDir">اتجاه كتابة الرموز</label>
+        <select id="edDir"><option value="rtl">من اليمين إلى اليسار</option><option value="ltr">من اليسار إلى اليمين</option></select></div>
+      <div><label class="lbl" for="edSep">فاصل بين الحروف</label><input type="text" id="edSep" placeholder="اتركه فارغاً للرموز المفردة"></div>
+      <div><label class="lbl" for="edWord">فاصل بين الكلمات</label><input type="text" id="edWord" value=" "></div>
+    </div>
+    <p class="note">الحروف الثمانية والعشرون مطلوبة. <b>ء ة ى</b> اختيارية؛ إن تُركت فارغة تُكتب ة كـ ه، وى كـ ي. الهمزات على الألف والواو والياء تُعامل كحروفها.</p>
+    <div class="row">
+      <button id="edRandom">توليد رموز عشوائية</button>
+      <button class="ghost" id="edClear">تفريغ الخانات</button>
+    </div>
+    <div class="edgrid" id="edGrid"></div>
+    <p class="note" id="edMsg"></p>
+    <div class="row">
+      <button class="primary" id="edSave">حفظ اللغة</button>
+      <button class="ghost" id="edCancel">إلغاء</button>
+    </div>
+  </section>
+
+  <details class="card" id="share">
+    <summary><h2>تصدير واستيراد</h2></summary>
+    <p class="note">كل لغة تُحفظ في متصفحك. لمشاركتها أو نقلها لجهاز آخر انسخ بياناتها، ثم الصقها في خانة الاستيراد هناك.</p>
+    <div>
+      <label class="lbl" for="exportBox" id="exportLbl">بيانات اللغة الحالية</label>
+      <textarea id="exportBox" readonly dir="ltr" style="font-family:ui-monospace,monospace;font-size:.8rem;min-height:120px"></textarea>
+    </div>
+    <div class="row"><button id="copyExport">نسخ البيانات</button></div>
+    <div>
+      <label class="lbl" for="importBox">الصق بيانات لغة هنا</label>
+      <textarea id="importBox" dir="ltr" style="font-family:ui-monospace,monospace;font-size:.8rem;min-height:90px" placeholder='{"name":"...","map":{"ا":"...", ...}}'></textarea>
+    </div>
+    <div class="row"><button class="primary" id="doImport">استيراد</button></div>
+    <p class="note" id="importMsg"></p>
+  </details>
+<footer class="rights">جميع الحقوق محفوظة © 2026 باسم أبو أنس</footer>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
