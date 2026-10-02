@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="رسائلي المشفرة: حوّل رسائلك العربية والإنجليزية إلى رموز لا يقرؤها إلا من يعرف كلمة السر">
+<title>رسائلي المشفرة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Sans+Symbols+2&family=Noto+Sans+Runic&family=Noto+Sans+Ogham&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="ar">
+  <header class="top">
+    <div class="titles">
+      <h1 data-i18n="title">رسائلي المشفرة</h1>
+      <p class="sub" data-i18n="sub"></p>
+    </div>
+    <label class="uisel" for="uiLang">
+      <span data-i18n="uiLang">لغة الواجهة</span>
+      <select id="uiLang">
+        <option value="ar">العربية</option>
+        <option value="en">English</option>
+      </select>
+    </label>
+  </header>
+
+  <div class="msgsel">
+    <label for="msgLang" data-i18n="msgLang">لغة الرسالة</label>
+    <select id="msgLang"></select>
+  </div>
+
+  <nav class="chips" id="chips" data-i18n-aria="ciphers"></nav>
+
+  <section class="card keycard">
+    <div class="head"><h2 data-i18n="keyTitle">المفتاح السري</h2><span class="pill" id="keyState"></span></div>
+    <div class="pwrow">
+      <input type="password" id="pw" autocomplete="off" spellcheck="false" data-i18n-ph="pwPh" data-i18n-aria="pwAria">
+      <button class="ghost" id="pwShow" type="button"></button>
+    </div>
+    <label class="check" for="variable"><input type="checkbox" id="variable"> <span><b data-i18n="varName"></b><span data-i18n="varDesc"></span></span></label>
+    <p class="note fp" id="fp" hidden><span data-i18n="fpPre"></span> <span class="glyph" id="fpGlyphs" dir="ltr"></span><span data-i18n="fpPost"></span></p>
+    <p class="note" id="keyNote"></p>
+  </section>
+
+  <section class="card">
+    <div class="dir">
+      <div class="side" id="fromName"></div>
+      <button class="swap" id="swap" type="button" data-i18n-aria="swap">⇄</button>
+      <div class="side" id="toName"></div>
+    </div>
+    <div>
+      <label class="lbl" for="input" id="inLbl"></label>
+      <textarea id="input" spellcheck="false"></textarea>
+    </div>
+    <div>
+      <span class="lbl" data-i18n="out"></span>
+      <div class="out" id="output" aria-live="polite"></div>
+    </div>
+    <p class="note" id="status"></p>
+    <div class="row">
+      <button class="primary" id="copy" type="button" data-i18n="copy"></button>
+      <button id="useOut" type="button" data-i18n="useOut"></button>
+      <button class="ghost" id="clear" type="button" data-i18n="clear"></button>
+    </div>
+  </section>
+
+  <section class="card" id="keypadCard" hidden>
+    <div class="head"><h2 data-i18n="keypad"></h2><span class="meta" data-i18n="keypadHint"></span></div>
+    <div class="keys" id="keys"></div>
+  </section>
+
+  <section class="card">
+    <div class="head">
+      <h2 id="tblTitle"></h2>
+      <div class="row" id="langActions"></div>
+    </div>
+    <p class="note" id="langDesc"></p>
+    <div class="table" id="table"></div>
+  </section>
+
+  <section class="card" id="editor" hidden>
+    <div class="head"><h2 id="edTitle"></h2><span class="pill" id="edFor"></span></div>
+    <div class="grid2">
+      <div><label class="lbl" for="edName" data-i18n="edName"></label><input type="text" id="edName" data-i18n-ph="edNamePh"></div>
+      <div><label class="lbl" for="edDir" data-i18n="edDir"></label>
+        <select id="edDir"><option value="rtl" data-i18n="rtl"></option><option value="ltr" data-i18n="ltr"></option></select></div>
+      <div><label class="lbl" for="edSep" data-i18n="edSep"></label><input type="text" id="edSep" data-i18n-ph="edSepPh"></div>
+      <div><label class="lbl" for="edWord" data-i18n="edWord"></label><input type="text" id="edWord" value=" "></div>
+    </div>
+    <p class="note" id="edNote"></p>
+    <div class="row">
+      <button id="edRandom" type="button" data-i18n="edRandom"></button>
+      <button class="ghost" id="edClear" type="button" data-i18n="edClear"></button>
+    </div>
+    <div class="edgrid" id="edGrid"></div>
+    <p class="note" id="edMsg"></p>
+    <div class="row">
+      <button class="primary" id="edSave" type="button" data-i18n="edSave"></button>
+      <button class="ghost" id="edCancel" type="button" data-i18n="edCancel"></button>
+    </div>
+  </section>
+
+  <details class="card" id="share">
+    <summary><h2 data-i18n="share"></h2></summary>
+    <p class="note" data-i18n="shareNote"></p>
+    <div>
+      <label class="lbl" for="exportBox" id="exportLbl"></label>
+      <textarea id="exportBox" class="mono" readonly dir="ltr"></textarea>
+    </div>
+    <div class="row"><button id="copyExport" type="button" data-i18n="copyData"></button></div>
+    <div>
+      <label class="lbl" for="importBox" data-i18n="importLbl"></label>
+      <textarea id="importBox" class="mono small" dir="ltr" placeholder='{"name":"...","alpha":"ar","map":{...}}'></textarea>
+    </div>
+    <div class="row"><button class="primary" id="doImport" type="button" data-i18n="importBtn"></button></div>
+    <p class="note" id="importMsg"></p>
+  </details>
+
+  <footer class="rights" data-i18n="footer">جميع الحقوق محفوظة © 2026 باسم أبو أنس</footer>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
